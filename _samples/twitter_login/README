@@ -1,0 +1,22 @@
+How to start the app?
+
+$> rackup
+
+URLs
+
+  - http://localhost:9292/
+      Displays "Twitter FOO"  
+
+  - http://localhost:9292/authenticate (if already authenticated)
+      Redirects to 
+        GET /authenticate?oauth_token=U1crbMSUaVDijMyleGnLnSRFv85cght2NUttTY3NmLQ&oauth_verifier=3yycMeukyr7gTH5pnEsu3yYmUAx6AhDDuuOeyhtRA
+      Then redirects to
+        GET /authorized 
+
+  - http://localhost:9292/authenticate (if not authenticated)
+      Redirects to 
+        twitter site
+      Then redirects to
+        GET /authenticate?oauth_token=6FIla3pNw6dJPV3hHAKe277X6Xav5s60LFOkaAhxI&oauth_verifier=9P0Q5NAO6ndvHx1qhureRxnnOVfgdP8Rt7Q59z33KZw
+      Then redirects to
+        GET /authorized
