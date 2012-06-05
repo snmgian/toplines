@@ -1,26 +1,32 @@
-class Task
-  include DataMapper::Resource
+module Toplines
+  module Models
 
-  PENDING_STATUS = 0
-  REJECTED_STATUS = 1
-  COMPLETED_STATUS = 2
+    class Task
+      include DataMapper::Resource
 
-  property :id,           Serial
-  property :description,  String
-  property :points,       Integer
-  property :status,       Integer
+      PENDING_STATUS = 0
+      REJECTED_STATUS = 1
+      COMPLETED_STATUS = 2
 
-  belongs_to :user, :required => false
+      property :id,           Serial
+      property :description,  String
+      property :points,       Integer
+      property :status,       Integer
 
-  def completed?
-    self.status == COMPLETED_STATUS
-  end
+      belongs_to :user, :required => false
 
-  def pending?
-    self.status == PENDING_STATUS
-  end
+      def completed?
+        self.status == COMPLETED_STATUS
+      end
 
-  def rejected?
-    self.status == REJECTED_STATUS
+      def pending?
+        self.status == PENDING_STATUS
+      end
+
+      def rejected?
+        self.status == REJECTED_STATUS
+      end
+    end
+
   end
 end

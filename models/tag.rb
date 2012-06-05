@@ -1,6 +1,12 @@
-class Tag
-  include DataMapper::Resource
+module Toplines
+  module Models
 
-  property :id,         Serial
-  property :name,       String
+    class Tag
+      include DataMapper::Resource
+
+      property :id,         Serial
+      property :name,       String
+    end
+
+  end
 end
