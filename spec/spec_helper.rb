@@ -10,6 +10,7 @@ RSpec.configure do |config|
     DataMapper::Logger.new($stdout, :debug)
 
     Dir[File.dirname(__FILE__) + "/../models/**/*.rb"].each {|f| require f}
+    Dir[File.dirname(__FILE__) + "/../exceptions/**/*.rb"].each {|f| require f}
 
     DataMapper.finalize
 

@@ -10,7 +10,7 @@ class Task
   property :points,       Integer
   property :status,       Integer
 
-  belongs_to :user
+  belongs_to :user, :required => false
 
   def completed?
     self.status == COMPLETED_STATUS

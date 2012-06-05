@@ -7,7 +7,7 @@ describe Toplines::Business::Tasks do
 
   subject { Toplines::Business::Tasks }
 
-  describe '#create' do
+  describe '.create' do
     let(:user) { User.create }
     let(:description) { 'task description' }
     let(:points) { 5 }
@@ -41,11 +41,9 @@ describe Toplines::Business::Tasks do
     end
   end
 
-  describe '#reject' do
-    let(:user) { User.create }
-
+  describe '.reject' do
     it "rejects the task" do
-      task = Task.create(:user => user)
+      task = Task.create
 
       subject.reject(task)
 
@@ -53,15 +51,65 @@ describe Toplines::Business::Tasks do
     end
   end
 
-  describe '#complete' do
-    let(:user) { User.create }
-
+  describe '.complete' do
     it "completes the task" do
-      task = Task.create(:user => user)
+      task = Task.create
 
       subject.complete(task)
 
       task.should be_completed
+    end
+  end
+
+  describe '.down' do
+    let(:task) { Task.create(:points => 5) }
+    it "decrements task's points by 1" do
+      expect {
+        subject.down(task)
+      }.to change{task.points}.by(-1)
+    end
+
+    context 'with points' do
+      it "decrements task's points by the given ones" do
+        points = 4
+        expect {
+          subject.down(task, points)
+        }.to change{task.points}.by(0 - points)
+      end
+    end
+  end
+
+  describe '.up' do
+    let(:task) { Task.create(:points => 5) }
+    it "increments task's points by 1" do
+      expect {
+        subject.up(task)
+      }.to change{task.points}.by(1)
+    end
+
+    context 'with points' do
+      it "increments task's points by the given ones" do
+        points = 4
+        expect {
+          subject.up(task, points)
+        }.to change{task.points}.by(points)
+      end
+    end
+  end
+
+  describe '.get' do
+    let(:task) { Task.create }
+
+    it "returns the task" do
+      returned = subject.get(task.id)
+
+      task.should == returned
+    end
+
+    it "raises TaskNotFoundError when there is no task" do
+      expect {
+        subject.get(0)
+      }.should raise_error(Toplines::Business::TaskNotFoundError)
     end
   end
 end
