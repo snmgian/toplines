@@ -1,5 +1,5 @@
 module Business
-  class Tasks
+  module Tasks
 
     def self.create(description, points, user)
       Models::Task.create(

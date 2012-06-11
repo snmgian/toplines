@@ -5,8 +5,6 @@ require 'business/tasks'
 
 describe Business::Tasks do
 
-  subject { Business::Tasks }
-
   describe '.create' do
     let(:user) { Models::User.create }
     let(:description) { 'task description' }
