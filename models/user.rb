@@ -1,12 +1,8 @@
 module Toplines
   module Models
 
-    class User
-      include DataMapper::Resource
-
-      property :id,         Serial
-      
-      has n, :tasks
+    class User < Sequel::Model
+      one_to_many :tasks
     end
 
   end

@@ -35,9 +35,9 @@ describe Toplines::Business::Tasks do
 
       task = subject.create(description, points, user)
 
-      task.user.should be(user)
-      task.description.should be(description)
-      task.points.should be(points)
+      task.user.should == user
+      task.description.should == description
+      task.points.should == points
     end
   end
 

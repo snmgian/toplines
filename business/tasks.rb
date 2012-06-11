@@ -16,14 +16,12 @@ module Toplines
       end
 
       def self.down(task, points = 1)
-        # TODO: check for data integrity
         task.update(:points => task.points - points)
       end
 
       def self.get(task_id)
-        Models::Task.get!(task_id)
-      rescue DataMapper::ObjectNotFoundError => e
-        raise Toplines::Business::TaskNotFoundError
+        task = Models::Task[task_id]
+        task || (raise Toplines::Business::TaskNotFoundError)
       end
 
       def self.reject(task)
@@ -31,7 +29,6 @@ module Toplines
       end
 
       def self.up(task, points = 1)
-        # TODO: check for data integrity
         task.update(:points => task.points + points)
       end
     end

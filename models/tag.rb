@@ -1,11 +1,7 @@
 module Toplines
   module Models
 
-    class Tag
-      include DataMapper::Resource
-
-      property :id,         Serial
-      property :name,       String
+    class Tag < Sequel::Model
     end
 
   end
