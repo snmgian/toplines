@@ -1,6 +1,8 @@
 module Business
   module Tasks
 
+    TOP_COUNT = 10
+
     def self.create(description, points, user)
       Models::Task.create(
         :description => description,
@@ -26,6 +28,10 @@ module Business
 
     def self.reject(task)
       task.update(:status => Models::Task::REJECTED_STATUS)
+    end
+
+    def self.top
+      Models::Task.all(:order => :points.desc, :limit => TOP_COUNT)
     end
 
     def self.up(task, points = 1)

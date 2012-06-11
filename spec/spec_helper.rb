@@ -17,4 +17,11 @@ RSpec.configure do |config|
     DataMapper.setup(:default, 'mysql://root:root@localhost/toplines')
     DataMapper.auto_migrate!
   end
+
+  config.around(:each) do |example|
+    DataMapper.repository(:default).transaction do |t|
+      example.run
+      t.rollback
+    end
+  end
 end

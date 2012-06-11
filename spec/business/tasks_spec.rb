@@ -39,16 +39,6 @@ describe Business::Tasks do
     end
   end
 
-  describe '.reject' do
-    it "rejects the task" do
-      task = Models::Task.create
-
-      subject.reject(task)
-
-      task.should be_rejected
-    end
-  end
-
   describe '.complete' do
     it "completes the task" do
       task = Models::Task.create
@@ -77,6 +67,85 @@ describe Business::Tasks do
     end
   end
 
+  describe '.get' do
+    let(:task) { Models::Task.create }
+
+    it "returns the task" do
+      returned = subject.get(task.id)
+
+      task.should == returned
+    end
+
+    it "raises TaskNotFoundError when there is no task" do
+      expect {
+        subject.get(0)
+      }.should raise_error(Business::TaskNotFoundError)
+    end
+  end
+
+  describe '.reject' do
+    it "rejects the task" do
+      task = Models::Task.create
+
+      subject.reject(task)
+
+      task.should be_rejected
+    end
+  end
+
+  describe '.top' do
+
+    let(:t2) { Models::Task.create(:points => 2) }
+    let(:t5) { Models::Task.new(:points => 5) }
+    let(:t8) { Models::Task.create(:points => 8) }
+
+    describe 'ordering' do
+      before do
+        t5.save
+        t8.save
+        t2.save
+      end
+
+      it "returns the top tasks ordered by points" do
+        top = subject.top
+
+        top.should == [t8, t5, t2]
+      end
+    end
+
+    describe 'limiting' do
+      context 'when less than 10 tasks' do
+        let(:tasks_count) { 4 }
+        before do
+          tasks_count.times do
+            Models::Task.create
+          end
+        end
+
+        it "should return all the tasks" do
+          top = subject.top
+
+          top.should have(tasks_count).items
+        end
+      end
+
+      context 'when more than 10 tasks' do
+        let(:tasks_count) { 14 }
+        before do
+          tasks_count.times do
+            Models::Task.create
+          end
+        end
+
+        it "should return all the tasks" do
+          top = subject.top
+
+          top.should have(10).items
+        end
+      end
+    end
+  end
+
   describe '.up' do
     let(:task) { Models::Task.create(:points => 5) }
     it "increments task's points by 1" do
@@ -92,22 +161,6 @@ describe Business::Tasks do
           subject.up(task, points)
         }.to change{task.points}.by(points)
       end
-    end
-  end
-
-  describe '.get' do
-    let(:task) { Models::Task.create }
-
-    it "returns the task" do
-      returned = subject.get(task.id)
-
-      task.should == returned
-    end
-
-    it "raises TaskNotFoundError when there is no task" do
-      expect {
-        subject.get(0)
-      }.should raise_error(Business::TaskNotFoundError)
     end
   end
 end
