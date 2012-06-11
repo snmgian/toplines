@@ -3,25 +3,25 @@ require 'spec_helper'
 require 'business/tasks'
 
 
-describe Toplines::Business::Tasks do
+describe Business::Tasks do
 
-  subject { Toplines::Business::Tasks }
+  subject { Business::Tasks }
 
   describe '.create' do
-    let(:user) { Toplines::Models::User.create }
+    let(:user) { Models::User.create }
     let(:description) { 'task description' }
     let(:points) { 5 }
 
     it "creates a task" do
       expect {
         subject.create(description, points, user)
-      }.to change{Toplines::Models::Task.count}.by(1)
+      }.to change{Models::Task.count}.by(1)
     end
 
     it "returns the created task" do
       task = subject.create(description, points, user)
 
-      task.should be_a(Toplines::Models::Task)
+      task.should be_a(Models::Task)
       task.id.should be
     end
 
@@ -43,7 +43,7 @@ describe Toplines::Business::Tasks do
 
   describe '.reject' do
     it "rejects the task" do
-      task = Toplines::Models::Task.create
+      task = Models::Task.create
 
       subject.reject(task)
 
@@ -53,7 +53,7 @@ describe Toplines::Business::Tasks do
 
   describe '.complete' do
     it "completes the task" do
-      task = Toplines::Models::Task.create
+      task = Models::Task.create
 
       subject.complete(task)
 
@@ -62,7 +62,7 @@ describe Toplines::Business::Tasks do
   end
 
   describe '.down' do
-    let(:task) { Toplines::Models::Task.create(:points => 5) }
+    let(:task) { Models::Task.create(:points => 5) }
     it "decrements task's points by 1" do
       expect {
         subject.down(task)
@@ -80,7 +80,7 @@ describe Toplines::Business::Tasks do
   end
 
   describe '.up' do
-    let(:task) { Toplines::Models::Task.create(:points => 5) }
+    let(:task) { Models::Task.create(:points => 5) }
     it "increments task's points by 1" do
       expect {
         subject.up(task)
@@ -98,7 +98,7 @@ describe Toplines::Business::Tasks do
   end
 
   describe '.get' do
-    let(:task) { Toplines::Models::Task.create }
+    let(:task) { Models::Task.create }
 
     it "returns the task" do
       returned = subject.get(task.id)
@@ -109,7 +109,7 @@ describe Toplines::Business::Tasks do
     it "raises TaskNotFoundError when there is no task" do
       expect {
         subject.get(0)
-      }.should raise_error(Toplines::Business::TaskNotFoundError)
+      }.should raise_error(Business::TaskNotFoundError)
     end
   end
 end

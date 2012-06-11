@@ -3,12 +3,12 @@ require 'spec_helper'
 require 'models/task'
 
 
-describe Toplines::Models::Task do
+describe Models::Task do
 
   describe '#completed?' do
     context 'when status == completed' do
       it "is true" do
-        subject.status = Toplines::Models::Task::COMPLETED_STATUS
+        subject.status = Models::Task::COMPLETED_STATUS
 
         subject.should be_completed
       end
@@ -26,7 +26,7 @@ describe Toplines::Models::Task do
   describe '#pending?' do
     context 'when status == pending' do
       it "is true" do
-        subject.status = Toplines::Models::Task::PENDING_STATUS
+        subject.status = Models::Task::PENDING_STATUS
 
         subject.should be_pending
       end
@@ -44,7 +44,7 @@ describe Toplines::Models::Task do
   describe '#rejected?' do
     context 'when status == rejected' do
       it "is true" do
-        subject.status = Toplines::Models::Task::REJECTED_STATUS
+        subject.status = Models::Task::REJECTED_STATUS
 
         subject.should be_rejected
       end

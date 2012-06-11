@@ -1,8 +1,6 @@
-module Toplines
-  module Models
+module Models
 
-    class Tag < Sequel::Model
-    end
-
+  class Tag < Sequel::Model
   end
+
 end

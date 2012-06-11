@@ -1,8 +1,6 @@
-module Toplines
-  module Business
+module Business
 
-    class TaskNotFoundError < StandardError
-    end
-
+  class TaskNotFoundError < StandardError
   end
+
 end

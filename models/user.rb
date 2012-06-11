@@ -1,9 +1,7 @@
-module Toplines
-  module Models
+module Models
 
-    class User < Sequel::Model
-      one_to_many :tasks
-    end
-
+  class User < Sequel::Model
+    one_to_many :tasks
   end
+
 end
