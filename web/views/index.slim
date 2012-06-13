@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title Slim FOO Example
+
+  body
+    h1 Slim Example
+
+    div
+      = @message
+
+    div AAA
+
+    div
+      - @tasks.each do |task|
+          p = task.description
