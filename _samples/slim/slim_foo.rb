@@ -6,4 +6,5 @@ get '/' do
   slim :index
 end
 
-# ruby slim.rb
+# ruby slim_foo.rb
+# http://localhost:4567/
