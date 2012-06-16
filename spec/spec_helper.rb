@@ -1,21 +1,13 @@
-require 'data_mapper'
-require 'dm-migrations'
 require 'rspec'
 
+require 'lib/engine'
 
 Dir[File.dirname(__FILE__) + "/support/**/*.rb"].each {|f| require f}
 
 RSpec.configure do |config|
   config.before(:suite) do
-    DataMapper::Logger.new($stdout, :debug)
-
-    Dir[File.dirname(__FILE__) + "/../models/**/*.rb"].each {|f| require f}
-    Dir[File.dirname(__FILE__) + "/../exceptions/**/*.rb"].each {|f| require f}
-
-    DataMapper.finalize
-
-    DataMapper.setup(:default, 'mysql://root:root@localhost/toplines')
-    DataMapper.auto_migrate!
+    engine = G::Engine.new(:test)
+    engine.run
   end
 
   config.around(:each) do |example|
