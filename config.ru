@@ -1,4 +1,6 @@
-require_relative 'web/toplines'
+require 'lib/engine'
+
+G::Engine.new(:development).run
 
 run Web::Toplines
 

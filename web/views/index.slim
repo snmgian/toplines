@@ -9,8 +9,24 @@ html
     div
       = @message
 
-    div AAA
-
-    div
+    table
       - @tasks.each do |task|
-          p = task.description
+        tr
+          td = task.id
+          td = task.description
+          td = task.points
+          td = task.status
+          td
+            a href="/tasks/#{task.id}/edit" Edit
+          td
+            form action="/tasks/#{task.id}/complete" method='post'
+              input type='submit' value='Complete'
+          td
+            form action="/tasks/#{task.id}/reject" method='post'
+              input type='submit' value='Reject'
+          td
+            form action="/tasks/#{task.id}/up" method='post'
+              input type='submit' value='Up'
+          td
+            form action="/tasks/#{task.id}/down" method='post'
+              input type='submit' value='Down'

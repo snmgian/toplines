@@ -37,5 +37,9 @@ module Business
     def self.up(task, points = 1)
       task.update(:points => task.points + points)
     end
+
+    def self.update(task, params)
+      task.update(params)
+    end
   end
 end

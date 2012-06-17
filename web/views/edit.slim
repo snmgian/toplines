@@ -1,0 +1,20 @@
+doctype html
+html
+  head
+    title Slim FOO Example
+
+  body
+    h1 Edit task
+
+    form action="/tasks/#{@task.id}" method='post'
+      p
+        Description
+        input type='text' value=@task.description name='description'
+      p
+        Points
+        input type='text' value=@task.points name='points'
+      p
+        Status
+        input type='text' value=@task.status name='status'
+      p
+        input type='submit' value='Modify'

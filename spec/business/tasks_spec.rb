@@ -5,6 +5,12 @@ require 'business/tasks'
 
 describe Business::Tasks do
 
+  #puts "DESCRIBE"
+  #it "fails" do
+    #puts "AAA"
+    #false.should be_true
+  #end
+  #puts "END DESCRIBE"
   describe '.create' do
     let(:user) { Models::User.create }
     let(:description) { 'task description' }
@@ -161,6 +167,26 @@ describe Business::Tasks do
           subject.up(task, points)
         }.to change{task.points}.by(points)
       end
+    end
+  end
+
+  describe '.update' do
+    let(:task) { Models::Task.create }
+    let(:params) do
+      {
+        :description => 'DESC',
+        :points => 1,
+        :status => Models::Task::PENDING_STATUS,
+      }
+    end
+
+    it "updates the task" do
+
+      subject.update(task, params)
+
+      task.description.should == params[:description]
+      task.points.should == params[:points]
+      task.status.should == params[:status]
     end
   end
 end
