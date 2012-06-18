@@ -6,7 +6,7 @@ html
   body
     h1 Edit task
 
-    form action="/tasks/#{@task.id}" method='post'
+    form action="/tasks/#{@task.id}/edit" method='post'
       p
         Description
         input type='text' value=@task.description name='description'

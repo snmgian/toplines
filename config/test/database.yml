@@ -1,1 +1,1 @@
-connection_url: 'mysql://root:root@localhost/toplines'
+connection_url: 'sqlite::memory:'

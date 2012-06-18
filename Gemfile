@@ -9,5 +9,6 @@ gem 'slim', '1.2.1'
 gem 'twitter-login', '0.4.3', :require => 'twitter/login'
 
 group :test do
+  gem 'dm-sqlite-adapter', '1.2.0'
   gem 'rspec', '2.10.0'
 end

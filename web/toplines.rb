@@ -35,8 +35,14 @@ module Web
     end
     
     post '/tasks/:id/edit' do
-      task = Business::Tasks.get(params[:id])
-      Business::Tasks.update
+      p params
+      p params.class
+      ps = params.select { |k, v| [:id, :description, :points, :status].include?(k.to_sym) }
+      p ps
+      task = Business::Tasks.get(ps['id'])
+      Business::Tasks.update(task, ps)
+
+      redirect to('/')
     end
 
     post '/tasks/:id/reject' do
