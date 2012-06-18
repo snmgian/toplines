@@ -4,9 +4,9 @@ html
     title Slim FOO Example
 
   body
-    h1 Edit task
+    h1 New task
 
-    form action="/tasks/#{@task.id}/edit" method='post'
+    form action="/tasks/new" method='post'
       p
         | Description
         input type='text' value=@task.description name='description'

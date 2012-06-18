@@ -8,11 +8,24 @@ module Web
   class Toplines < Sinatra::Base
 
     get '/' do
-      @message = 'SUCCESS'
       @tasks = Business::Tasks.top
 
-      p @tasks
       slim :index
+    end
+
+    get '/tasks/new' do
+      @task = Models::Task.new
+      slim :new
+    end
+
+    post '/tasks/new' do
+      Business::Tasks.create(
+        params[:description],
+        params[:points],
+        nil
+      )
+
+      redirect to('/')
     end
 
     post '/tasks/:id/complete' do
@@ -35,10 +48,7 @@ module Web
     end
     
     post '/tasks/:id/edit' do
-      p params
-      p params.class
       ps = params.select { |k, v| [:id, :description, :points, :status].include?(k.to_sym) }
-      p ps
       task = Business::Tasks.get(ps['id'])
       Business::Tasks.update(task, ps)
 
