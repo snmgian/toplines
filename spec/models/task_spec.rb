@@ -1,8 +1,5 @@
 require 'spec_helper'
 
-require 'models/task'
-
-
 describe Models::Task do
 
   describe '#completed?' do

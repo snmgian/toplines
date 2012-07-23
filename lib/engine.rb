@@ -1,5 +1,3 @@
-require 'data_mapper'
-require 'dm-migrations'
 require 'yaml'
 
 module G
@@ -22,6 +20,8 @@ module G
 
     def run
       self.load_configuration
+      self.before_require
+      self.__require
       self.auto_require
 
       @plugins.each do |plugin|
@@ -31,6 +31,16 @@ module G
 
     def auto_require
       @plugins.each(&:auto_require)
+    end
+
+    def before_require
+      @plugins.each do |plugin|
+        plugin.before_require(self.environment, @configuration)
+      end
+    end
+
+    def __require
+      @plugins.each(&:__require)
     end
 
     def load_configuration
@@ -48,7 +58,7 @@ module G
   class AbstractPlugin
 
     def auto_require
-      paths = auto_require_paths
+      paths = self.auto_require_paths
 
       paths.each do |path|
         Dir["#{path}/**/*.rb"].each {|f| require f}
@@ -76,6 +86,19 @@ module G
       conf
     end
 
+    def requires
+      []
+    end
+
+    # @abstract
+    def before_require(environment, configuration); end
+
+    def __require
+      self.requires.each do |r|
+        require r
+      end
+    end
+
     def configuration_name(configuration_file)
       configuration_file.gsub(/\.yml$/, '')
     end
@@ -98,10 +121,42 @@ module G
 end
 
 module G
+  class BundlerPlugin < AbstractPlugin
+    def before_require(environment, configuration)
+      require 'bundler'
+      Bundler.setup(:default, environment)
+    end
+  end
+end
+
+module G
+  class ForaneusPlugin < AbstractPlugin
+    def auto_require_paths
+      [
+        'forms',
+      ]
+    end
+
+    def requires
+      [
+        'foraneus',
+      ]
+    end
+  end
+end
+
+module G
   class DataMapperPlugin < AbstractPlugin
 
     def configurations
       ["database.yml"]
+    end
+
+    def requires
+      [
+        'data_mapper',
+        'dm-migrations',
+      ]
     end
 
     def run(environment, configuration)

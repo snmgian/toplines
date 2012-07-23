@@ -5,12 +5,6 @@ require 'business/tasks'
 
 describe Business::Tasks do
 
-  #puts "DESCRIBE"
-  #it "fails" do
-    #puts "AAA"
-    #false.should be_true
-  #end
-  #puts "END DESCRIBE"
   describe '.create' do
     let(:user) { Models::User.create }
     let(:description) { 'task description' }

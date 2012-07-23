@@ -1,9 +1,6 @@
 require 'sinatra/base'
 require 'slim'
 
-require 'business/tasks'
-require 'models/task'
-
 module Web
   class Toplines < Sinatra::Base
 
@@ -19,9 +16,11 @@ module Web
     end
 
     post '/tasks/new' do
+      form = Forms::Task.build!(params)
+
       Business::Tasks.create(
-        params[:description],
-        params[:points],
+        form.description,
+        form.points,
         nil
       )
 
@@ -48,9 +47,10 @@ module Web
     end
     
     post '/tasks/:id/edit' do
-      ps = params.select { |k, v| [:id, :description, :points, :status].include?(k.to_sym) }
-      task = Business::Tasks.get(ps['id'])
-      Business::Tasks.update(task, ps)
+      form = Forms::Task.build!(params)
+      task = Business::Tasks.get(form.id)
+
+      Business::Tasks.update(task, form[:as_hash])
 
       redirect to('/')
     end
